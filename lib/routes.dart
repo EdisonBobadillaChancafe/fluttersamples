@@ -5,13 +5,19 @@ import 'mainlist.dart';
 
 final router = GoRouter(
   routes: [
+    /*
     GoRoute(
       path: '/languagelearning',
       builder: (context, state) => MainLanguageLearning(),
-    ),
+    ),*/
     GoRoute(
-      path: '/',
-      builder: (context, state) => MainList(),
-    ),
+        path: '/',
+        builder: (context, state) => MainList(),
+        routes: <RouteBase>[
+          GoRoute(
+            path: 'languagelearning',
+            builder: (context, state) => MainLanguageLearning(),
+          )
+        ]),
   ],
 );

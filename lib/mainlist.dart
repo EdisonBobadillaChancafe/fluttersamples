@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 double? widthphone;
 double? heightphone;
@@ -28,11 +29,16 @@ class MainList extends StatelessWidget {
           child: GridView.count(
             crossAxisCount: 2,
             children: [
-              _listViewOptional('Languages\nlearning', Colors.greenAccent, '',
+              _listViewOptional(
+                context,
+                'Languages\nlearning',
+                Colors.greenAccent,
+                '/languagelearning',
+                'assets/main/images/languagesapp.png',
+              ),
+              _listViewOptional(context, 'Primera', Colors.tealAccent, '',
                   'assets/main/images/languagesapp.png'),
-              _listViewOptional('Primera', Colors.tealAccent, '',
-                  'assets/main/images/languagesapp.png'),
-              _listViewOptional('Primera', Colors.redAccent, '',
+              _listViewOptional(context, 'Primera', Colors.redAccent, '',
                   'assets/main/images/languagesapp.png'),
             ],
           ),
@@ -55,9 +61,13 @@ class MainList extends StatelessWidget {
   }
 }
 
-Widget _listViewOptional(
-    String tittle, MaterialAccentColor color, String route, String image) {
-  return Container(
+Widget _listViewOptional(BuildContext context, String tittle,
+    MaterialAccentColor color, String route, String image) {
+  return GestureDetector(
+    onTap: () => {
+      context.go(route),
+    },
+    child: Container(
       margin: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -96,5 +106,7 @@ Widget _listViewOptional(
             ),
           ),
         ),
-      ));
+      ),
+    ),
+  );
 }

@@ -63,7 +63,18 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/main/images/languagesapp.png
-
+  fonts:
+    - family: Inter
+      fonts:
+        - asset:  fonts/language_learning/static/Inter-Black.ttf
+        - asset:  fonts/language_learning/static/Inter-Bold.ttf
+        - asset:  fonts/language_learning/static/Inter-ExtraBold.ttf
+        - asset:  fonts/language_learning/static/Inter-ExtraLight.ttf
+        - asset:  fonts/language_learning/static/Inter-Light.ttf
+        - asset:  fonts/language_learning/static/Inter-Medium.ttf
+        - asset:  fonts/language_learning/static/Inter-Regular.ttf
+        - asset:  fonts/language_learning/static/Inter-SemiBold.ttf
+        - asset:  fonts/language_learning/static/Inter-Thin.ttf
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
