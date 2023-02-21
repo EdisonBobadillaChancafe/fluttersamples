@@ -19,12 +19,44 @@ class MainLanguageLearning extends StatelessWidget {
         child: Column(children: [
           Stack(
             children: [
-              Text('是',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 500)),
+              Container(
+                color: Colors.white,
+                width: double.infinity,
+                height: heightphone! - 55,
+                child: Stack(children: [
+                  Positioned(
+                      bottom: 5,
+                      left: -50,
+                      child: Text(
+                        '是',
+                        style: TextStyle(
+                            color: Config.primarycolor,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 550),
+                      )),
+                  Positioned(
+                      bottom: heightphone! / 2 - 65,
+                      child: Text(
+                        'start learning chinese now',
+                        style: TextStyle(
+                            color: Config.primarycolordark,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30),
+                      ))
+                ]),
+              ),
+              /*Positioned(
+                child: Text('是',
+                    style: TextStyle(
+                        overflow: TextOverflow.clip,
+                        wordSpacing: 0,
+                        color: color['PrimaryColor'],
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 500)),
+              ),*/
               Container(
                 width: double.infinity,
                 height: heightphone! / 2 - 50,
@@ -34,19 +66,23 @@ class MainLanguageLearning extends StatelessWidget {
                       Flexible(
                           flex: 1,
                           child: Container(
-                            color: color['black'],
+                            color: Config.black,
                           )),
                       Flexible(
                           flex: 1,
                           child: Stack(children: [
-                            Container(
-                              color: color['PrimaryColor'],
+                            AnimatedContainer(
+                              duration: const Duration(seconds: 1),
+                              curve: Curves.fastOutSlowIn,
+                              child: Container(
+                                color: Config.primarycolor,
+                              ),
                             ),
                             Positioned(
                               bottom: (heightphone! / 2 - 130) / 4,
                               left: widthphone! / 2 + 30,
                               child: Container(
-                                color: Colors.yellow,
+                                color: Config.secundarycolor,
                                 height: 50,
                                 width: 40,
                               ),
@@ -80,7 +116,7 @@ class MainLanguageLearning extends StatelessWidget {
                     child: Ink(
                       child: Container(
                         decoration: BoxDecoration(
-                            color: color['SecundaryColor'],
+                            color: Config.secundarycolor,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(25))),
                         width: widthphone! - 40,
