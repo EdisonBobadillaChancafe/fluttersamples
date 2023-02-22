@@ -1,14 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:go_router/go_router.dart';
 
 import 'config.dart';
 
 double? widthphone;
 double? heightphone;
 
-class MainLanguageLearning extends StatelessWidget {
+class MainLanguageLearning extends StatefulWidget {
   const MainLanguageLearning({super.key});
+
+  @override
+  State<MainLanguageLearning> createState() => _MainLanguageLearningState();
+}
+
+class _MainLanguageLearningState extends State<MainLanguageLearning>
+    with TickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation _animationposition;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 1200));
+    _animationposition =
+        IntTween(begin: 0, end: 100).animate(_animationController);
+    print(_animationController.value);
+    _animationposition.addListener(() {
+      setState(() {});
+    });
+    _animationController.forward();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +50,9 @@ class MainLanguageLearning extends StatelessWidget {
                 child: Stack(children: [
                   Positioned(
                       bottom: 5,
-                      left: -50,
+                      //left: -30,
+                      //left: 300,
+                      left: -3.3 * _animationposition.value + 300,
                       child: Text(
                         '是',
                         style: TextStyle(
@@ -40,7 +66,8 @@ class MainLanguageLearning extends StatelessWidget {
                       child: Text(
                         'start learning chinese now',
                         style: TextStyle(
-                            color: Config.primarycolordark,
+                            color: Config.primarycolordark
+                                .withOpacity(_animationposition.value / 100),
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.bold,
                             fontSize: 30),
@@ -64,25 +91,49 @@ class MainLanguageLearning extends StatelessWidget {
                   Column(
                     children: [
                       Flexible(
-                          flex: 1,
-                          child: Container(
-                            color: Config.black,
-                          )),
+                        flex: 1,
+                        child: Column(children: [
+                          Flexible(
+                            flex: _animationposition.value,
+                            child: Container(
+                              color: Config.black,
+                            ),
+                          ),
+                          Flexible(
+                            flex: 100 -
+                                int.parse(_animationposition.value.toString()),
+                            child: Container(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ]),
+                      ),
                       Flexible(
                           flex: 1,
                           child: Stack(children: [
-                            AnimatedContainer(
-                              duration: const Duration(seconds: 1),
-                              curve: Curves.fastOutSlowIn,
-                              child: Container(
-                                color: Config.primarycolor,
-                              ),
+                            Row(
+                              children: [
+                                Flexible(
+                                    flex: 100 -
+                                        int.parse(_animationposition.value
+                                            .toString()),
+                                    child: Container(
+                                      color: Colors.white,
+                                    )),
+                                Flexible(
+                                    flex: _animationposition.value,
+                                    child:
+                                        Container(color: Config.primarycolor))
+                              ],
                             ),
                             Positioned(
                               bottom: (heightphone! / 2 - 130) / 4,
                               left: widthphone! / 2 + 30,
                               child: Container(
-                                color: Config.secundarycolor,
+                                decoration: BoxDecoration(
+                                  color: Config.secundarycolor.withOpacity(
+                                      _animationposition.value / 100),
+                                ),
                                 height: 50,
                                 width: 40,
                               ),
@@ -112,19 +163,27 @@ class MainLanguageLearning extends StatelessWidget {
                   bottom: 0,
                   right: 20,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () async {
+                      await _animationController.reverse();
+
+                      context
+                          .go('/languagelearning/languagelearningmainscreen');
+                    },
                     child: Ink(
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Config.secundarycolor,
+                            color: Config.secundarycolor
+                                .withOpacity(_animationposition.value / 100),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(25))),
                         width: widthphone! - 40,
                         height: 55,
-                        child: const Center(
+                        child: Center(
                           child: Text(
                             'get started',
                             style: TextStyle(
+                                color: Colors.black.withOpacity(
+                                    _animationposition.value / 100),
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.bold,
                                 fontSize: 17),

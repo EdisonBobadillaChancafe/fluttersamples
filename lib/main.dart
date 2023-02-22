@@ -19,8 +19,4 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
-
-  Widget _listAppClones() {
-    return ListView();
-  }
 }
