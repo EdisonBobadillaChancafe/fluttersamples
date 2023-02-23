@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_samples_application/app_clone/language_learning_mobile/config.dart';
+import 'package:go_router/go_router.dart';
 
 double? widthphone;
 double? heightphone;
@@ -66,11 +67,14 @@ class MainScreenLanguageLearning extends StatelessWidget {
               ]),
             ),
             SizedBox(height: 10),
-            _containerlanguage(160, '字母', 'alphabet', '母', Config.primarycolor),
-            SizedBox(height: 10),
-            _containerlanguage(160, '写作', 'writting', '作', Config.primarycolor),
+            _containerlanguage(
+                context, 160, '字母', 'alphabet', '母', Config.primarycolor),
             SizedBox(height: 10),
             _containerlanguage(
+                context, 160, '写作', 'writting', '作', Config.primarycolor),
+            SizedBox(height: 10),
+            _containerlanguage(
+                context,
                 160,
                 '疑问分词 ma',
                 'the interrogative\nparticiple "ma"',
@@ -125,58 +129,69 @@ class MainScreenLanguageLearning extends StatelessWidget {
   }
 }
 
-Widget _containerlanguage(double height, String chineseword,
-    String traductorword, String backgroundchineseword, Color primarycolor) {
-  return Container(
-    decoration: BoxDecoration(
-        color: primarycolor,
-        borderRadius: BorderRadius.all(Radius.circular(25))),
-    margin: EdgeInsets.only(left: 15, right: 15),
-    width: double.infinity,
-    height: height,
-    child: Stack(
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: 12, left: 25),
-          child: Align(
-            alignment: Alignment.topLeft,
-            child: Column(
-              children: [
-                Text(
-                  chineseword,
-                  textHeightBehavior: TextHeightBehavior(
-                    applyHeightToFirstAscent: false,
-                    applyHeightToLastDescent: false,
+Widget _containerlanguage(
+    BuildContext context,
+    double height,
+    String chineseword,
+    String traductorword,
+    String backgroundchineseword,
+    Color primarycolor) {
+  return InkWell(
+    onTap: () {
+      context.go(
+          '/languagelearning/languagelearningmainscreen/languagelearningwordscreen');
+    },
+    child: Container(
+      decoration: BoxDecoration(
+          color: primarycolor,
+          borderRadius: BorderRadius.all(Radius.circular(25))),
+      margin: EdgeInsets.only(left: 15, right: 15),
+      width: double.infinity,
+      height: height,
+      child: Stack(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: 12, left: 25),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Column(
+                children: [
+                  Text(
+                    chineseword,
+                    textHeightBehavior: TextHeightBehavior(
+                      applyHeightToFirstAscent: false,
+                      applyHeightToLastDescent: false,
+                    ),
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Inter',
+                      color: Colors.white,
+                    ),
                   ),
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'Inter',
-                    color: Colors.white,
+                  SizedBox(
+                    height: 5,
                   ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  traductorword,
-                  style: TextStyle(
-                      fontSize: 20, fontFamily: 'Inter', color: Colors.white),
-                )
-              ],
+                  Text(
+                    traductorword,
+                    style: TextStyle(
+                        fontSize: 20, fontFamily: 'Inter', color: Colors.white),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        Positioned(
-          bottom: -80,
-          right: -50,
-          child: Text(
-            backgroundchineseword,
-            overflow: TextOverflow.clip,
-            style:
-                TextStyle(color: Colors.white.withOpacity(0.1), fontSize: 220),
-          ),
-        )
-      ],
+          Positioned(
+            bottom: -80,
+            right: -50,
+            child: Text(
+              backgroundchineseword,
+              overflow: TextOverflow.clip,
+              style: TextStyle(
+                  color: Colors.white.withOpacity(0.1), fontSize: 220),
+            ),
+          )
+        ],
+      ),
     ),
   );
 }

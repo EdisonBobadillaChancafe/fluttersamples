@@ -168,6 +168,7 @@ class _MainLanguageLearningState extends State<MainLanguageLearning>
 
                       context
                           .go('/languagelearning/languagelearningmainscreen');
+                      _animationController.forward();
                     },
                     child: Ink(
                       child: Container(
