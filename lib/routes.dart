@@ -25,8 +25,13 @@ final router = GoRouter(
                     builder: (context, state) => MainScreenLanguageLearning(),
                     routes: <RouteBase>[
                       GoRoute(
-                        path: 'languagelearningwordscreen',
-                        builder: (context, state) => WordScreen(),
+                        path:
+                            'languagelearningwordscreen/:word/:translatedword',
+                        name: 'languagelearningwordscreen',
+                        builder: (context, state) => WordScreen(
+                          word: state.params['word'],
+                          translatedword: state.params['translatedword'],
+                        ),
                       )
                     ]),
               ])

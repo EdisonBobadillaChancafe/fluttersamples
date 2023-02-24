@@ -138,8 +138,8 @@ Widget _containerlanguage(
     Color primarycolor) {
   return InkWell(
     onTap: () {
-      context.go(
-          '/languagelearning/languagelearningmainscreen/languagelearningwordscreen');
+      context.goNamed('languagelearningwordscreen',
+          params: {'word': chineseword, 'translatedword': traductorword});
     },
     child: Container(
       decoration: BoxDecoration(
