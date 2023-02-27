@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 
+import 'app_clone/assistant_voice/mainscreen.dart';
 import 'app_clone/language_learning_mobile/splashscreen.dart';
 import 'app_clone/language_learning_mobile/mainscreen.dart';
 import 'app_clone/language_learning_mobile/wordscreen.dart';
@@ -34,7 +35,11 @@ final router = GoRouter(
                         ),
                       )
                     ]),
-              ])
+              ]),
+          GoRoute(
+            path: 'voiceassistant',
+            builder: (context, state) => MainScreenAssistantVoice(),
+          )
         ]),
   ],
 );
