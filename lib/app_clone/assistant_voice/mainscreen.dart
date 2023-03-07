@@ -1,46 +1,65 @@
-import 'dart:ffi';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_samples_application/app_clone/assistant_voice/Config.dart';
 
 import 'Utils.dart';
 
-class MainScreenAssistantVoice extends StatelessWidget {
+class MainScreenAssistantVoice extends StatefulWidget {
   const MainScreenAssistantVoice({super.key});
 
   @override
+  State<MainScreenAssistantVoice> createState() =>
+      _MainScreenAssistantVoiceState();
+}
+
+class _MainScreenAssistantVoiceState extends State<MainScreenAssistantVoice> {
+  @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
     return Scaffold(
       body: SafeArea(
         child: Stack(children: [
-          Stack(
-            children: [
-              Container(
-                width: double.infinity,
-                height: double.infinity,
-                decoration: BoxDecoration(color: Config.blackcolor),
-              ),
-              Positioned(
-                  top: MediaQuery.of(context).size.height / 2 - 100,
-                  right: -50,
-                  width: 400,
-                  height: 400,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: RadialGradient(radius: 0.5, colors: [
-                          Config.secundarycolor.withOpacity(0.6),
-                          Config.blackcolor
-                        ], stops: [
-                          0.2,
-                          1
-                        ])),
-                  ))
-            ],
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(color: Config.blackcolor),
           ),
+          Positioned(
+              top: MediaQuery.of(context).size.height / 2 - 100,
+              right: -50,
+              width: 400,
+              height: 400,
+              child: Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(radius: 0.5, colors: [
+                      Config.secundarycolor.withOpacity(0.6),
+                      Config.blackcolor
+                    ], stops: [
+                      0.2,
+                      1
+                    ])),
+              )),
+          Positioned(
+              top: -125,
+              left: -125,
+              width: 350,
+              height: 350,
+              child: Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(radius: 0.5, colors: [
+                      Config.secundarycolor.withOpacity(0.1),
+                      Config.blackcolor
+                    ], stops: [
+                      0.2,
+                      1
+                    ])),
+              )),
           Padding(
             padding: EdgeInsets.only(left: 20, top: 20, right: 20),
             child: Column(
@@ -50,7 +69,6 @@ class MainScreenAssistantVoice extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      decoration: BoxDecoration(color: Config.secundarycolor),
                       height: 100,
                       width: 100,
                       child: Image.network(
@@ -90,6 +108,7 @@ class MainScreenAssistantVoice extends StatelessWidget {
                         fontSize: 35),
                   ),
                 ),
+
                 //_animationVoice(),
                 /*Container(
                     decoration: BoxDecoration(
@@ -97,9 +116,15 @@ class MainScreenAssistantVoice extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(100))),
                     width: 150,
                     child: floatbottonmicrophone()),*/
-                _transparentsContainers(),
-                _transparentsContainers(),
-                _transparentsContainers()
+                _wavesanimations(),
+                /*
+                _transparentsContainers(
+                    'Speaking', 'Talk to me about anything', Icons.volume_up),
+                _transparentsContainers(
+                    'Game', "Let's fight", Icons.groups_sharp),
+                _transparentsContainers('Walking',
+                    "Let's take a walk around the city", Icons.videogame_asset)
+                    */
               ],
             ),
           ),
@@ -116,7 +141,8 @@ class MainScreenAssistantVoice extends StatelessWidget {
     );
   }
 
-  Widget _transparentsContainers() {
+  Widget _transparentsContainers(
+      String tittle, String subtittle, IconData icon) {
     return Container(
       width: double.infinity,
       height: 120,
@@ -124,27 +150,67 @@ class MainScreenAssistantVoice extends StatelessWidget {
         borderRadius: BorderRadius.circular(25),
         color: Colors.grey.withOpacity(0.3),
       ),
-      child: Row(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Speaking',
-                style: TextStyle(color: Colors.white),
-              ),
-              Text(
-                'Speaking',
-                style: TextStyle(color: Colors.white),
-              )
-            ],
-          ),
-          Icon(
-            Icons.ac_unit,
-            color: Colors.white,
-          )
-        ],
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  tittle,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontFamily: 'Signika',
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  subtittle,
+                  style: TextStyle(
+                    fontFamily: 'Signika',
+                    color: Colors.white,
+                    fontSize: 15,
+                  ),
+                )
+              ],
+            ),
+            Icon(
+              icon,
+              color: Colors.white,
+            )
+          ],
+        ),
       ),
     );
+  }
+
+  Widget _wavesanimations() {
+    return Container(
+      width: double.infinity,
+      height: 100,
+      color: Colors.amber,
+    );
+  }
+}
+
+class wave extends CustomPainter {
+  Colors color;
+  BuildContext context;
+  wave({required this.color, required this.context});
+  @override
+  void paint(Canvas canvas, Size size) {
+    // TODO: implement paint
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    // TODO: implement shouldRepaint
+    throw UnimplementedError();
   }
 }
