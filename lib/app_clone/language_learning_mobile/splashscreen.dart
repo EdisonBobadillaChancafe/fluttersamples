@@ -27,7 +27,6 @@ class _MainLanguageLearningState extends State<MainLanguageLearning>
         vsync: this, duration: Duration(milliseconds: 1200));
     _animationposition =
         IntTween(begin: 0, end: 100).animate(_animationController);
-    print(_animationController.value);
     _animationposition.addListener(() {
       setState(() {});
     });

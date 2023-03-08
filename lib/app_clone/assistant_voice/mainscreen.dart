@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_samples_application/app_clone/assistant_voice/Config.dart';
+import 'package:rive/rive.dart' as rive;
 
 import 'Utils.dart';
 
@@ -14,8 +15,21 @@ class MainScreenAssistantVoice extends StatefulWidget {
       _MainScreenAssistantVoiceState();
 }
 
-class _MainScreenAssistantVoiceState extends State<MainScreenAssistantVoice> {
+class _MainScreenAssistantVoiceState extends State<MainScreenAssistantVoice>
+    with TickerProviderStateMixin {
   @override
+  late AnimationController _animationcontroller;
+  late Animation _animationposition;
+  @override
+  void initState() {
+    _animationcontroller =
+        AnimationController(vsync: this, duration: Duration(seconds: 2));
+    _animationposition =
+        IntTween(begin: 0, end: 1).animate(_animationcontroller);
+    // TODO: implement initState
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -109,14 +123,15 @@ class _MainScreenAssistantVoiceState extends State<MainScreenAssistantVoice> {
                   ),
                 ),
 
+                _wavesanimations(context),
                 //_animationVoice(),
-                /*Container(
+                Container(
                     decoration: BoxDecoration(
                         color: Colors.yellow,
                         borderRadius: BorderRadius.all(Radius.circular(100))),
                     width: 150,
-                    child: floatbottonmicrophone()),*/
-                _wavesanimations(),
+                    child: floatbottonmicrophone()),
+
                 /*
                 _transparentsContainers(
                     'Speaking', 'Talk to me about anything', Icons.volume_up),
@@ -134,10 +149,15 @@ class _MainScreenAssistantVoiceState extends State<MainScreenAssistantVoice> {
   }
 
   Widget _animationVoice() {
-    return Container(
-      width: 200,
-      height: 200,
-      color: Colors.amber,
+    return AnimatedBuilder(
+      animation: _animationcontroller,
+      builder: (context, child) {
+        return Container(
+          width: 150,
+          height: 150,
+          color: Colors.amber,
+        );
+      },
     );
   }
 
@@ -190,27 +210,14 @@ class _MainScreenAssistantVoiceState extends State<MainScreenAssistantVoice> {
     );
   }
 
-  Widget _wavesanimations() {
+  Widget _wavesanimations(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 100,
-      color: Colors.amber,
+      height: 150,
+      child: rive.RiveAnimation.asset(
+        'assets/app_clone/assistant_voices/waves.riv',
+        fit: BoxFit.cover,
+      ),
     );
-  }
-}
-
-class wave extends CustomPainter {
-  Colors color;
-  BuildContext context;
-  wave({required this.color, required this.context});
-  @override
-  void paint(Canvas canvas, Size size) {
-    // TODO: implement paint
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    // TODO: implement shouldRepaint
-    throw UnimplementedError();
   }
 }
